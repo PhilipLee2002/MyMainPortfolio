@@ -1,0 +1,129 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg:            #0E0E0E;
+  --color-surface:       #161616;
+  --color-border:        rgba(255, 255, 255, 0.06);
+  --color-text:          #EBEBEB;
+  --color-muted:         #888888;
+  --color-accent:        #D49B4A;
+  --color-accent-glow:   rgba(212, 155, 74, 0.15);
+  --color-white:         #FFFFFF;
+
+  --spacing-section-mobile: 48px;
+  --spacing-section-tablet: 64px;
+  --spacing-section-desktop-min: 80px;
+  --spacing-section-desktop-max: 120px;
+}
+
+/*
+ * next/font exposes the loaded fonts as --font-display-raw/--font-body-raw
+ * on <html> (see layout.tsx). Those names must differ from the Tailwind
+ * theme keys below — reusing the same name here would make Tailwind's
+ * :root declaration self-referential (a CSS variable cycle resolves to
+ * the guaranteed-invalid value), breaking font-family site-wide.
+ */
+@theme inline {
+  --font-display: var(--font-display-raw);
+  --font-body:    var(--font-body-raw);
+}
+
+:root {
+  --bg:            #0E0E0E;
+  --surface:       #161616;
+  --border:        rgba(255, 255, 255, 0.06);
+  --text:          #EBEBEB;
+  --muted:         #888888;
+  --accent:        #D49B4A;
+  --accent-glow:   rgba(212, 155, 74, 0.15);
+  --white:         #FFFFFF;
+}
+
+/*
+ * Tailwind's own reset/utilities live inside @layer (base/utilities), and
+ * CSS Cascade Layers give ANY unlayered rule priority over ALL layered
+ * rules regardless of specificity. An unlayered `* { margin: 0; padding: 0 }`
+ * here would silently beat every margin/padding utility class (px-6, mb-12,
+ * mx-auto, ...) site-wide — so this reset must live in the same `base`
+ * layer Tailwind uses, letting utilities (a later layer) win as intended.
+ */
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+html {
+  scroll-behavior: auto; /* Lenis overrides this at runtime */
+  background-color: var(--bg);
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body), sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  position: relative;
+}
+
+/* Editorial atmosphere — layered washes + grain so the page isn't a flat slab.
+   --accent-glow is tweened on scroll (see ScrollAtmosphere). */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 80% 55% at 15% 10%, var(--accent-glow) 0%, transparent 55%),
+    radial-gradient(ellipse 60% 45% at 90% 75%, var(--accent-glow) 0%, transparent 52%),
+    radial-gradient(ellipse 50% 40% at 50% 100%, rgba(255, 255, 255, 0.02) 0%, transparent 45%),
+    var(--bg);
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 180px 180px;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-display), sans-serif;
+}
+
+/* Focus ring — amber outline for accessibility */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* Quieter tech / skill lists (editorial, not pill clusters) */
+.tech-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 0;
+  list-style: none;
+}
+
+.tech-list li {
+  font-size: 0.875rem;
+  color: var(--muted);
+  font-weight: 300;
+}
+
+.tech-list li:not(:last-child)::after {
+  content: "·";
+  margin: 0 0.65rem;
+  color: var(--border);
+}
