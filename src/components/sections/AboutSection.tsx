@@ -1,6 +1,7 @@
+import Image from 'next/image';
 import { ScrollReveal } from '@/components/ui/ScrollReveal';
 
-const skills = ['Laravel', 'PHP', 'MySQL', 'Python', 'AI tooling', 'Next.js'];
+const skills = ['UI/UX', 'Laravel', 'PHP', 'MySQL', 'Python', 'AI tooling', 'Next.js'];
 
 export function AboutSection() {
   return (
@@ -8,24 +9,51 @@ export function AboutSection() {
       id="about"
       className="px-6 py-[var(--spacing-section-mobile)] sm:py-[var(--spacing-section-tablet)] lg:py-[var(--spacing-section-desktop-min)]"
     >
-      <div className="max-w-[1200px] mx-auto grid lg:grid-cols-[auto_1fr] gap-12 lg:gap-20 items-start">
+      <div className="max-w-[1200px] mx-auto grid lg:grid-cols-[auto_1fr] gap-12 lg:gap-20 items-center">
 
-        {/* Portrait slot — monogram until real photo at /public/profile.jpg */}
         <div className="flex justify-center lg:justify-start">
-          {/* REPLACE WITH PROFILE PHOTO */}
-          <div
-            className="relative w-36 h-36 sm:w-40 sm:h-40 overflow-hidden flex items-center justify-center font-display font-bold text-4xl text-[var(--accent)]"
-            style={{ background: 'var(--surface)', border: '1px solid var(--border)', minWidth: 80, minHeight: 80 }}
-            aria-label="PL monogram — profile photo placeholder"
-          >
-            PL
+          <div className="relative mr-3.5 mb-3.5">
+            <div
+              aria-hidden
+              className="pointer-events-none absolute inset-0 translate-x-3.5 translate-y-3.5"
+              style={{ border: '1px solid rgba(212, 155, 74, 0.6)' }}
+            />
+            <div
+              className="relative z-10 p-2"
+              style={{
+                background: '#1a1a1a',
+                boxShadow: '0 22px 48px rgba(0, 0, 0, 0.5), 0 0 32px rgba(212, 155, 74, 0.12)',
+              }}
+            >
+              <div
+                className="p-[2px]"
+                style={{
+                  background:
+                    'linear-gradient(145deg, #f0d7a2 0%, #d49b4a 38%, rgba(255,255,255,0.35) 62%, #b67d32 100%)',
+                }}
+              >
+                <div
+                  className="relative w-64 h-80 sm:w-72 sm:h-[22rem] lg:w-80 lg:h-[26rem] overflow-hidden"
+                  style={{ background: 'var(--surface)' }}
+                >
+                  <Image
+                    src="/profile.jpg"
+                    alt="Philip Lee"
+                    fill
+                    sizes="(min-width: 1024px) 320px, 288px"
+                    className="object-cover object-[center_22%]"
+                    priority
+                  />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
         {/* Bio */}
         <div className="max-w-2xl">
           <ScrollReveal y={24}>
-            <h2 className="font-display font-bold text-[var(--text)] text-4xl mb-6">About</h2>
+            <h2 className="font-display font-bold text-[var(--text)] text-5xl sm:text-6xl mb-6 tracking-tight">About</h2>
           </ScrollReveal>
 
           <p className="text-[var(--text)] font-body font-light leading-relaxed mb-6 text-base sm:text-lg">

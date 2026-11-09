@@ -36,6 +36,7 @@
   --muted:         #888888;
   --accent:        #D49B4A;
   --accent-glow:   rgba(212, 155, 74, 0.15);
+  --strike:        0;
   --white:         #FFFFFF;
 }
 
@@ -86,7 +87,22 @@ body::before {
     var(--bg);
 }
 
+/* Amber strike — flashes during hero→work, sits just under the 64px nav */
 body::after {
+  content: "";
+  position: fixed;
+  top: 64px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  z-index: 40;
+  pointer-events: none;
+  background: var(--accent);
+  opacity: var(--strike, 0);
+  box-shadow: 0 0 24px 4px rgba(212, 155, 74, calc(var(--strike, 0) * 0.55));
+}
+
+html::after {
   content: "";
   position: fixed;
   inset: 0;
@@ -96,6 +112,21 @@ body::after {
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   background-repeat: repeat;
   background-size: 180px 180px;
+}
+
+@keyframes word-ticker-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.word-ticker-track {
+  animation: word-ticker-scroll 28s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .word-ticker-track {
+    animation: none;
+  }
 }
 
 h1, h2, h3 {

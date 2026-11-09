@@ -13,18 +13,26 @@ const arbProject = fc.record<Project>({
   id:                  nonBlankString(),
   title:               nonBlankString(),
   category:            nonBlankString(),
-  year:                fc.integer({ min: 2000, max: 2099 }),
+  weight:              fc.constantFrom('featured' as const, 'compact' as const),
+  tagline:             nonBlankString(),
+  status:              nonBlankString(),
+  problem:             nonBlankString(),
+  contributionLabel:   nonBlankString(),
+  contribution:        nonBlankString(),
+  highlights:          fc.array(nonBlankString(), { minLength: 1 }),
   techStack:           fc.array(nonBlankString(), { minLength: 1 }),
-  features:            fc.array(nonBlankString(), { minLength: 1 }),
-  outcomeMetrics:      fc.array(fc.string()),
-  imagePlaceholderType: fc.constantFrom('gradient' as const, 'terminal' as const),
+  pointTo:             nonBlankString(),
+  imageNotes:          fc.array(nonBlankString(), { minLength: 1 }),
+  imagePlaceholderType: fc.constantFrom('gallery' as const, 'terminal' as const),
+  href:                fc.option(fc.webUrl(), { nil: undefined }),
+  role:                fc.option(nonBlankString(), { nil: undefined }),
+  stackNote:           fc.option(nonBlankString(), { nil: undefined }),
   repoUrl:             fc.option(fc.webUrl(), { nil: undefined }),
   repoLabel:           fc.option(fc.string(), { nil: undefined }),
-  reflectionText:      fc.option(nonBlankString(), { nil: undefined }),
 });
 
 describe('ProjectCard', () => {
-  it('always renders category, year, all tech stack and feature items (P1)', () => {
+  it('always renders category, all tech stack and highlight items (P1)', () => {
     fc.assert(fc.property(arbProject, (project) => {
       cleanup(); // each property iteration renders fresh; avoid accumulating DOM across runs
       const { container } = render(
@@ -37,9 +45,8 @@ describe('ProjectCard', () => {
       // value appears somewhere in the rendered output — without that indirection.
       const text = container.textContent ?? '';
       expect(text).toContain(project.category);
-      expect(text).toContain(String(project.year));
       project.techStack.forEach((t) => expect(text).toContain(t));
-      project.features.forEach((f) => expect(text).toContain(f));
+      project.highlights.forEach((item) => expect(text).toContain(item));
     }));
   }, 20000);
 

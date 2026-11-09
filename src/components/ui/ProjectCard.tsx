@@ -10,20 +10,29 @@ interface ProjectCardProps {
   layout?: 'stacked' | 'split';
 }
 
-// max-h caps the image's height independent of the card's own width — without
-// it, aspect-video alone lets the image balloon (e.g. ~590px tall on a wide
-// card) and dwarf the rest of the card's content.
-function GradientPlaceholder() {
+function hostLabel(href: string) {
+  try {
+    return new URL(href).host.replace(/^www\./, '');
+  } catch {
+    return href;
+  }
+}
+
+function GalleryPlaceholder({ notes }: { notes: string[] }) {
   return (
     <div
-      className="w-full aspect-video max-h-[380px] flex items-center justify-center"
+      className="w-full aspect-video max-h-[380px] flex flex-col justify-between p-5"
       style={{
         background: 'linear-gradient(135deg, var(--surface) 0%, var(--accent-glow) 100%)',
         borderBottom: '1px solid var(--border)',
       }}
     >
-      {/* REPLACE WITH FRACA SCREENSHOT */}
-      <span className="text-[var(--muted)] text-xs tracking-wide uppercase">Project preview</span>
+      <span className="text-[var(--muted)] text-xs tracking-wide uppercase">Images</span>
+      <ul className="space-y-1">
+        {notes.slice(0, 2).map((note) => (
+          <li key={note} className="text-sm text-[var(--text)] font-light">{note}</li>
+        ))}
+      </ul>
     </div>
   );
 }
@@ -34,17 +43,25 @@ function TerminalMockup() {
       className="w-full aspect-video max-h-[380px] p-5 font-mono text-xs"
       style={{ background: '#0a0a0a', borderBottom: '1px solid var(--border)' }}
     >
-      {/* REPLACE WITH NOVA SCREENSHOT */}
-      <p className="text-green-400">$ nova</p>
-      <p className="text-[var(--muted)] mt-1">Nova Terminal AI — ready</p>
+      <p className="text-[var(--accent)]">$ nova</p>
+      <p className="text-[var(--muted)] mt-1">offline · this machine</p>
     </div>
   );
 }
 
 export function ProjectCard({ project, framerEnabled, layout = 'stacked' }: ProjectCardProps) {
-  const image = project.imagePlaceholderType === 'gradient'
-    ? <GradientPlaceholder />
-    : <TerminalMockup />;
+  const image = project.images && project.images.length > 0 ? (
+    <img
+      src={project.images[0].src}
+      alt={project.images[0].alt}
+      className="w-full aspect-video max-h-[380px] object-cover object-top"
+      style={{ borderBottom: '1px solid var(--border)' }}
+    />
+  ) : project.imagePlaceholderType === 'gallery' ? (
+    <GalleryPlaceholder notes={project.imageNotes} />
+  ) : (
+    <TerminalMockup />
+  );
 
   const imageBlock = framerEnabled ? (
     <motion.div
@@ -55,7 +72,6 @@ export function ProjectCard({ project, framerEnabled, layout = 'stacked' }: Proj
     >
       <div className="relative">
         {image}
-        {/* Subtle accent glow on hover via group — applied as overlay sibling */}
         <div
           className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-350 group-hover:opacity-100"
           style={{ background: 'radial-gradient(ellipse at center, var(--accent-glow) 0%, transparent 70%)' }}
@@ -71,7 +87,7 @@ export function ProjectCard({ project, framerEnabled, layout = 'stacked' }: Proj
     <div className="flex items-center gap-3 text-sm text-[var(--muted)]">
       <span>{project.category}</span>
       <span aria-hidden="true">·</span>
-      <span>{project.year}</span>
+      <span>{project.status}</span>
     </div>
   );
 
@@ -81,81 +97,81 @@ export function ProjectCard({ project, framerEnabled, layout = 'stacked' }: Proj
     </h3>
   );
 
-  const headlineOutcome = project.outcomeMetrics[0] ? (
-    <p className="text-[var(--accent)] font-body font-medium text-base leading-snug">
-      {project.outcomeMetrics[0]}
+  const tagline = (
+    <p className="text-[var(--text)] font-body font-light text-base leading-snug">
+      {project.tagline}
     </p>
-  ) : null;
+  );
 
-  const techChips = (
+  const techChips = project.techStack.length > 0 ? (
     <ul className="tech-list" aria-label="Tech stack">
       {project.techStack.map((tech) => (
         <li key={tech}>{tech}</li>
       ))}
     </ul>
-  );
+  ) : null;
 
-  const featuresBlock = (
-    <div>
-      <p className="text-xs uppercase tracking-wide text-[var(--muted)] mb-3">Features</p>
-      <ul className="space-y-2">
-        {project.features.map((f) => (
-          <li key={f} className="text-sm text-[var(--text)] flex gap-2 font-light">
-            <span className="text-[var(--accent)] shrink-0" aria-hidden="true">—</span>
-            {f}
-          </li>
-        ))}
-      </ul>
+  const highlightsBlock = project.highlights.length > 0 ? (
+    <ul className="space-y-2">
+      {project.highlights.map((item) => (
+        <li key={item} className="text-sm text-[var(--text)] flex gap-2 font-light">
+          <span className="text-[var(--accent)] shrink-0" aria-hidden="true">—</span>
+          {item}
+        </li>
+      ))}
+    </ul>
+  ) : null;
+
+  const links = (
+    <div className="flex flex-col gap-2 self-start">
+      {project.href && (
+        <a
+          href={project.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          data-cursor-hover
+          className="text-sm text-[var(--accent)] hover:underline"
+        >
+          {hostLabel(project.href)}
+        </a>
+      )}
+      {project.repoUrl && (
+        <a
+          href={project.repoUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          data-cursor-hover
+          className="text-sm text-[var(--accent)] hover:underline"
+        >
+          View Repository {project.repoLabel && <span className="text-[var(--muted)]">{project.repoLabel}</span>}
+        </a>
+      )}
     </div>
   );
 
-  const outcomesBlock = (
-    <div>
-      <p className="text-xs uppercase tracking-wide text-[var(--muted)] mb-3">Outcomes</p>
-      <ul className="space-y-2">
-        {project.outcomeMetrics.map((m) => (
-          <li key={m} className="text-sm text-[var(--accent)] font-light">{m}</li>
-        ))}
-      </ul>
-    </div>
-  );
-
-  const repoLink = project.repoUrl && (
-    <a
-      href={project.repoUrl}
-      target="_blank"
-      rel="noopener noreferrer"
-      data-cursor-hover
-      className="text-sm text-[var(--accent)] hover:underline self-start"
-    >
-      View Repository {project.repoLabel && <span className="text-[var(--muted)]">{project.repoLabel}</span>}
-    </a>
-  );
-
-  const reflectionBlock = project.reflectionText && (
+  const point = (
     <div className="pt-6" style={{ borderTop: '1px solid var(--border)' }}>
-      <p className="text-xs uppercase tracking-wide text-[var(--muted)] mb-2">Reflection</p>
-      <p className="text-sm text-[var(--muted)] leading-relaxed font-light">{project.reflectionText}</p>
+      <p className="text-xs uppercase tracking-wide text-[var(--muted)] mb-2">What I&apos;d point to</p>
+      <p className="text-sm text-[var(--muted)] leading-relaxed font-light">{project.pointTo}</p>
     </div>
   );
 
   const body = layout === 'split' ? (
     <div className="grid lg:grid-cols-[minmax(0,440px)_1fr] gap-10 lg:gap-14 items-start">
-      {/* Left — media + identity */}
       <div className="flex flex-col gap-5">
         {imageBlock}
         {meta}
         {title}
-        {headlineOutcome}
+        {tagline}
         {techChips}
       </div>
-
-      {/* Right — detail */}
       <div className="flex flex-col gap-8 pt-1">
-        {featuresBlock}
-        {outcomesBlock}
-        {repoLink}
-        {reflectionBlock}
+        {highlightsBlock}
+        {project.stackNote && (
+          <p className="text-sm text-[var(--muted)] font-light">{project.stackNote}</p>
+        )}
+        {links}
+        {point}
       </div>
     </div>
   ) : (
@@ -164,12 +180,14 @@ export function ProjectCard({ project, framerEnabled, layout = 'stacked' }: Proj
       <div className="flex flex-col gap-4 px-1">
         {meta}
         {title}
-        {headlineOutcome}
+        {tagline}
         {techChips}
-        {featuresBlock}
-        {outcomesBlock}
-        {repoLink}
-        {reflectionBlock}
+        {highlightsBlock}
+        {project.stackNote && (
+          <p className="text-sm text-[var(--muted)] font-light">{project.stackNote}</p>
+        )}
+        {links}
+        {point}
       </div>
     </div>
   );
@@ -178,7 +196,6 @@ export function ProjectCard({ project, framerEnabled, layout = 'stacked' }: Proj
     ? 'group rounded-none py-2 md:py-4'
     : 'group rounded-none';
 
-  // Soften whole-card scale — editorial surface, media zoom only
   if (framerEnabled) {
     return (
       <motion.article

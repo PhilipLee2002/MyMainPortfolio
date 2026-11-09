@@ -1,15 +1,39 @@
+export type ProjectWeight = 'featured' | 'compact';
+
+export interface ProjectNote {
+  label: string;
+  body: string;
+}
+
+export interface ProjectImage {
+  src: string;
+  /** Visible caption. Kept separate from the file name. */
+  label: string;
+  alt: string;
+}
+
 export interface Project {
   id: string;
   title: string;
   category: string;
-  year: number;
+  weight: ProjectWeight;
+  tagline: string;
+  status: string;
+  href?: string;
+  role?: string;
+  problem: string;
+  contributionLabel: string;
+  contribution: string;
+  highlights: string[];
+  note?: ProjectNote;
   techStack: string[];
-  features: string[];
-  outcomeMetrics: string[];
+  stackNote?: string;
+  pointTo: string;
+  images?: ProjectImage[];
+  imageNotes: string[];
+  imagePlaceholderType: 'gallery' | 'terminal';
   repoUrl?: string;
   repoLabel?: string;
-  reflectionText?: string;
-  imagePlaceholderType: 'gradient' | 'terminal';
 }
 
 export interface ContactFormData {

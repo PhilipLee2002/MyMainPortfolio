@@ -6,13 +6,14 @@ import { useReducedMotion } from '@/hooks/useReducedMotion';
 type Palette = {
   bg: [number, number, number];
   glow: number;
+  strike: number;
 };
 
 const PALETTES: Palette[] = [
-  { bg: [14, 14, 14], glow: 0.15 },  // hero
-  { bg: [22, 17, 12], glow: 0.28 },  // work — warmer amber cast
-  { bg: [18, 21, 26], glow: 0.10 },  // about — slightly cooler
-  { bg: [14, 14, 14], glow: 0.12 },  // contact — calm near-black
+  { bg: [8, 8, 8], glow: 0.12, strike: 0 },       // hero — near-black
+  { bg: [36, 32, 28], glow: 0.42, strike: 0.55 }, // work — dark gray + amber strike
+  { bg: [22, 23, 26], glow: 0.14, strike: 0.12 }, // about — cooler dark gray
+  { bg: [10, 10, 10], glow: 0.10, strike: 0 },     // contact — calm near-black
 ];
 
 const SECTION_IDS = ['hero', 'work', 'about', 'contact'] as const;
@@ -23,6 +24,8 @@ function clamp(n: number, min: number, max: number) {
 
 function mix(a: Palette, b: Palette, t: number): Palette {
   const u = clamp(t, 0, 1);
+  // Peak the amber strike in the middle of the hero→work crossing
+  const strikeBump = u > 0 && u < 1 ? Math.sin(u * Math.PI) * 0.35 : 0;
   return {
     bg: [
       a.bg[0] + (b.bg[0] - a.bg[0]) * u,
@@ -30,6 +33,7 @@ function mix(a: Palette, b: Palette, t: number): Palette {
       a.bg[2] + (b.bg[2] - a.bg[2]) * u,
     ],
     glow: a.glow + (b.glow - a.glow) * u,
+    strike: a.strike + (b.strike - a.strike) * u + strikeBump,
   };
 }
 
@@ -38,6 +42,7 @@ function applyPalette(palette: Palette) {
   const root = document.documentElement;
   root.style.setProperty('--bg', `rgb(${r.toFixed(1)}, ${g.toFixed(1)}, ${b.toFixed(1)})`);
   root.style.setProperty('--accent-glow', `rgba(212, 155, 74, ${palette.glow.toFixed(3)})`);
+  root.style.setProperty('--strike', palette.strike.toFixed(3));
 }
 
 function sampleAtmosphere() {
@@ -63,10 +68,6 @@ function sampleAtmosphere() {
   applyPalette(mix(PALETTES[i], PALETTES[next], t));
 }
 
-/**
- * Tweens page atmosphere (background + accent glow) as sections cross the viewport.
- * Stays inside the black / amber family — no rainbow section colors.
- */
 export function ScrollAtmosphere() {
   const reducedMotion = useReducedMotion();
 

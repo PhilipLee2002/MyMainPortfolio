@@ -16,7 +16,7 @@ export function ContactSection() {
         <div className="flex flex-col gap-10 lg:max-w-md lg:pt-2">
           <div>
             <ScrollReveal y={24}>
-              <h2 className="font-display font-bold text-[var(--text)] text-4xl mb-5 leading-tight">
+              <h2 className="font-display font-bold text-[var(--text)] text-5xl sm:text-6xl mb-5 leading-[0.95] tracking-tight">
                 Let&apos;s build something together.
               </h2>
             </ScrollReveal>
