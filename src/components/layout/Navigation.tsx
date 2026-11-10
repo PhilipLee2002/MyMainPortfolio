@@ -100,9 +100,8 @@ export function Navigation() {
             )
           )}
 
-          {/* CV download — replace the file when ready */}
           <a
-            href="/cv-placeholder.pdf"
+            href="/cv-philip-lee.pdf"
             download
             data-cursor-hover
             className="
@@ -112,7 +111,6 @@ export function Navigation() {
               transition-colors min-h-11 flex items-center
             "
           >
-            {/* REPLACE WITH ACTUAL CV PDF */}
             Download CV
           </a>
         </nav>
@@ -158,12 +156,11 @@ export function Navigation() {
           ))}
 
           <a
-            href="/cv-placeholder.pdf"
+            href="/cv-philip-lee.pdf"
             download
             onClick={() => setMenuOpen(false)}
             className="text-[var(--accent)] text-lg font-medium min-h-11 flex items-center"
           >
-            {/* REPLACE WITH ACTUAL CV PDF */}
             Download CV
           </a>
         </div>
