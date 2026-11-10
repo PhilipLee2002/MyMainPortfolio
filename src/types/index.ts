@@ -1,4 +1,4 @@
-export type ProjectWeight = 'featured' | 'compact';
+export type ProjectStage = 'deployed' | 'ready' | 'progress' | 'planning';
 
 export interface ProjectNote {
   label: string;
@@ -16,7 +16,7 @@ export interface Project {
   id: string;
   title: string;
   category: string;
-  weight: ProjectWeight;
+  stage: ProjectStage;
   tagline: string;
   status: string;
   href?: string;

@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from 'react';
 import type { Project } from '@/types';
+import { PROJECT_STAGES } from '@/lib/projects';
 import { CaseStudy } from '@/components/ui/CaseStudy';
 
 interface ProjectScrollerProps {
@@ -186,15 +187,13 @@ export function ProjectScroller({ projects, framerEnabled }: ProjectScrollerProp
               className="px-6 sm:px-10"
             >
               <div className="max-w-[1200px] mx-auto pt-8 pb-20">
-                {project.weight === 'compact' && (
-                  <h3 className="font-display font-bold text-[var(--text)] text-3xl sm:text-4xl mb-10 tracking-tight">
-                    In development
-                  </h3>
-                )}
+                <p className="text-xs uppercase tracking-[0.16em] text-[var(--accent)] mb-6">
+                  {PROJECT_STAGES.find((stage) => stage.id === project.stage)?.label}
+                </p>
                 <CaseStudy
                   project={project}
                   index={index}
-                  density={project.weight === 'featured' ? 'full' : 'short'}
+                  density="full"
                   framerEnabled={framerEnabled}
                   reveal={false}
                 />

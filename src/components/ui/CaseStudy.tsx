@@ -253,6 +253,17 @@ export function CaseStudy({ project, framerEnabled, index, density, reveal = tru
           {hostLabel(project.href)}
         </a>
       )}
+      {project.repoUrl && (
+        <a
+          href={project.repoUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          data-cursor-hover
+          className="inline-block mt-4 text-sm text-[var(--accent)] hover:underline"
+        >
+          {project.repoLabel ?? 'Repository'}
+        </a>
+      )}
     </>
   );
 

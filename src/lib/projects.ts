@@ -1,10 +1,17 @@
-import type { Project } from '@/types';
+import type { Project, ProjectStage } from '@/types';
+
+export const PROJECT_STAGES: { id: ProjectStage; label: string }[] = [
+  { id: 'deployed', label: 'Completed and deployed' },
+  { id: 'ready', label: 'Complete, not deployed yet' },
+  { id: 'progress', label: 'Works in progress' },
+  { id: 'planning', label: 'Works under planning' },
+];
 
 export const FRACA_SITE: Project = {
   id: 'fraca-site',
   title: 'FRACA SERVCOM Website',
   category: 'Client website',
-  weight: 'featured',
+  stage: 'deployed',
   tagline: 'A live catalogue site for a furniture and bags business operating since 2001.',
   status: 'Live — Phase 2 in development',
   href: 'https://fracaservcom.co.ke',
@@ -54,11 +61,105 @@ export const FRACA_SITE: Project = {
   imagePlaceholderType: 'gallery',
 };
 
+export const DASHING_TATA: Project = {
+  id: 'dashing-tata',
+  title: 'Dashing Tata',
+  category: 'Shop website',
+  stage: 'ready',
+  tagline: 'A Kenyan shopfront for clothes, shoes, and bags. Pick a piece, then send the order into WhatsApp.',
+  status: 'Built — orders open in WhatsApp',
+  problem:
+    'The shop needed people to order a specific photographed piece, in a size, and say how they would pay. An account and an online checkout were the wrong first step for that.',
+  contributionLabel: 'What I built',
+  contribution:
+    'A dark shopfront. The top of the page introduces the shop and a couple of pieces. The collection is a searchable grid, filtered by who the piece is for and by clothes, shoes, or bags. A product page puts the photos beside the order: size, quantity, Vooma Till or M-Pesa Paybill, an optional note, and a button that opens the shop’s WhatsApp chat with that order already written.',
+  highlights: [
+    'Real photos and KSh prices. No account, and no card checkout',
+    'Search, then filter by women, men, unisex, or kids, and by clothes, shoes, or bags',
+    'The WhatsApp message names the piece, the size, the quantity, and how the customer will pay',
+    'The shop confirms the item in that chat. Payment is by Vooma or M-Pesa, and pickup or delivery stays in the same thread',
+  ],
+  note: {
+    label: 'What comes later',
+    body: 'M-Pesa Daraja, once there is steady traffic. Until then the customer pays the till or paybill shown on the page, and the shop checks the message before releasing the piece.',
+  },
+  techStack: ['React', 'TypeScript', 'Vite', 'Tailwind CSS', 'Supabase'],
+  pointTo:
+    'The order is a message, not a checkout. Someone can name the exact shoe, the size, and Vooma or M-Pesa before a payment API exists. Daraja is the next step, not the first one.',
+  images: [
+    {
+      src: '/work/dashing-tata-home.png',
+      label: 'Shopfront',
+      alt: 'Dashing Tata homepage, with the shop introduction and two featured shoes priced in Kenyan shillings',
+    },
+    {
+      src: '/work/dashing-tata-collection.png',
+      label: 'Collection',
+      alt: 'Searchable collection of shoes, with filters for who the piece is for and for clothes, shoes, or bags',
+    },
+    {
+      src: '/work/dashing-tata-product.png',
+      label: 'Order',
+      alt: 'Air Jordan product page with photos, EU sizes, quantity, Vooma Till, M-Pesa Paybill, and send order on WhatsApp',
+    },
+  ],
+  imageNotes: [],
+  imagePlaceholderType: 'gallery',
+};
+
+export const LASHED_BY_LORAH: Project = {
+  id: 'lashed-by-lorah',
+  title: 'Lashed by Lorah',
+  category: 'Booking site',
+  stage: 'ready',
+  tagline:
+    'A one-page site for a lash and waxing practice in Nairobi. Services, prices, and how to book, before it goes live.',
+  status: 'Built — not deployed yet',
+  problem:
+    'People who find her on Instagram or by word of mouth still have to call to learn what she does, what it costs, where she works, and how to book.',
+  contributionLabel: 'What I built',
+  contribution:
+    'A quiet single page for my cousin’s practice. White background, soft lavender bands, and one deep purple for the bar, buttons, and prices. The menu covers classic, hybrid, and volume sets, fills, removal, a lash bath, and waxing from brows to a Brazilian, with the price and the time next to each service. A short bio, her certifications, and a gallery sit beside that list. Booking is a request, not a live calendar: name, email, phone, service, a preferred date, and a note. Call and WhatsApp sit next to the form.',
+  highlights: [
+    'Sticky navigation, and a hero with two paths: book, or browse the services',
+    'Featured service cards, the full menu, and a pricing table split into lashes and waxing, with care notes',
+    'About section with her portrait, five years of experience, certifications, and a short philosophy',
+    'Gallery with hover labels and a lightbox, and client quotes that advance on their own',
+    'The form checks required fields and shows a thank-you state. It does not send mail yet',
+  ],
+  note: {
+    label: 'At launch',
+    body: 'The form can be wired to email or a form service without changing the layout. There is no backend and no build step, so the page can go live as soon as she is ready.',
+  },
+  techStack: ['HTML', 'Tailwind CSS', 'vanilla JavaScript', 'Font Awesome', 'AOS'],
+  pointTo:
+    'Four answers on one screen: what she does, what it costs, where she works, and how to book. She works from Carey Spa, Uniafric House, on Koinange Street. Most of her clients will still reach her on WhatsApp, so that path is the obvious one.',
+  images: [
+    {
+      src: '/work/lashed-by-lorah-services.png',
+      label: 'Services',
+      alt: 'Lashed by Lorah service cards for classic, hybrid, and volume sets, with prices in Kenyan shillings and how long each takes',
+    },
+    {
+      src: '/work/lashed-by-lorah-about.png',
+      label: 'About',
+      alt: 'Portrait of Lorah beside a short bio, her certifications, and a note on her approach to beauty',
+    },
+    {
+      src: '/work/lashed-by-lorah-booking.png',
+      label: 'Booking',
+      alt: 'Booking section with the Carey Spa address, phone, WhatsApp, Instagram, hours, and an appointment request form',
+    },
+  ],
+  imageNotes: [],
+  imagePlaceholderType: 'gallery',
+};
+
 export const FRACA_INVENTORY: Project = {
   id: 'fraca-inventory',
   title: 'Inventory Management System — FRACA SERVCOM',
   category: 'Staff system',
-  weight: 'featured',
+  stage: 'ready',
   tagline: 'A private shop system for sales, stock, purchasing and daily totals.',
   status: 'Ready for review — board presentation pending',
   problem:
@@ -117,7 +218,7 @@ export const ASSET_MANAGEMENT: Project = {
   id: 'brs-assets',
   title: 'Asset Management System — Business Registration Service',
   category: 'System design',
-  weight: 'featured',
+  stage: 'ready',
   tagline:
     'System design for an organisational asset management system, developed during a five-month attachment.',
   status: 'Completed — organisational project',
@@ -139,7 +240,7 @@ export const NOVA: Project = {
   id: 'nova',
   title: 'Nova',
   category: 'Personal tool',
-  weight: 'featured',
+  stage: 'progress',
   tagline: 'A private, offline AI assistant that runs in the terminal.',
   status: 'Working — in daily personal use',
   problem:
@@ -163,7 +264,7 @@ export const VVENT: Project = {
   id: 'vvent',
   title: 'VVENT',
   category: 'Platform',
-  weight: 'compact',
+  stage: 'planning',
   tagline:
     'A platform for upcoming artists to be discovered, booked and paid — without needing a manager to open the door.',
   status: 'In development — early stage',
@@ -185,10 +286,44 @@ export const VVENT: Project = {
   imagePlaceholderType: 'gallery',
 };
 
-export const PROJECTS: Project[] = [
-  FRACA_SITE,
-  FRACA_INVENTORY,
-  ASSET_MANAGEMENT,
-  NOVA,
-  VVENT,
-];
+export const PLANPULSE: Project = {
+  id: 'planpulse',
+  title: 'PlanPulse',
+  category: 'Civic product',
+  stage: 'planning',
+  tagline:
+    'Checks whether a proposed block of flats can be carried by the local sewer, the soil, and the neighbours, before a county issues a building permit.',
+  status: 'Planning',
+  role: 'Team lead',
+  problem:
+    'Kenyan towns are approving taller buildings on pipes and plots that were built for houses. Neighbours usually hear about the building after construction starts.',
+  contributionLabel: 'What it is meant to do',
+  contribution:
+    'A developer enters the plot, the floors, and the number of homes. PlanPulse checks water use, sewage, and stormwater, and flags the application if the pipe would go past 85% full. For 14 days it runs a public notice by site poster, SMS, and WhatsApp. The county planner sees the map and the objections. The county still approves or refuses the building.',
+  highlights: [],
+  note: {
+    label: 'Where I am',
+    body: 'I lead the work, across the screens, the capacity calculations, and the phone notice. The proposal and the technical specification are written. No application has been built yet. Two other developers are specifying it with me.',
+  },
+  techStack: ['React', 'TypeScript', 'FastAPI', 'Supabase', 'Leaflet'],
+  stackNote: 'Specified, not built. Africa’s Talking would send the SMS and WhatsApp notice.',
+  pointTo:
+    'The county still issues the permit. PlanPulse only checks capacity and keeps the 14-day public notice in one record.',
+  repoUrl: 'https://github.com/PhilipLee2002/PlanPulse',
+  repoLabel: 'Proposal and specification',
+  imageNotes: [],
+  imagePlaceholderType: 'gallery',
+};
+
+export const PROJECTS: Project[] = PROJECT_STAGES.flatMap((stage) =>
+  [
+    FRACA_SITE,
+    DASHING_TATA,
+    LASHED_BY_LORAH,
+    FRACA_INVENTORY,
+    ASSET_MANAGEMENT,
+    NOVA,
+    VVENT,
+    PLANPULSE,
+  ].filter((project) => project.stage === stage.id),
+);
