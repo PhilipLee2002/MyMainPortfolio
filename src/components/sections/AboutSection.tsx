@@ -59,8 +59,8 @@ export function AboutSection() {
           <p className="text-[var(--text)] font-body font-light leading-relaxed mb-6 text-base sm:text-lg">
             I&apos;m Philip Lee, a full-stack developer who builds practical, high-impact digital solutions.
             Currently in my final year at KCA University, I specialize in architecting robust systems with
-            Laravel and a small local model for short replies. From a staff inventory system for a furniture shop
-            to a terminal tool that measures the machine in Python, I thrive at the intersection of system-thinking
+            Laravel, and a local assistant for the project I am in. From a staff inventory system for a furniture shop
+            to a terminal tool that reads the files and is meant to report on them, I thrive at the intersection of system-thinking
             and user experience. I don&apos;t just write code—I solve real business problems with clean, scalable architecture.
           </p>
 

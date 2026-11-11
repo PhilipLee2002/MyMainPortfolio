@@ -243,13 +243,13 @@ export const NOVA: Project = {
   category: 'Personal tool',
   stage: 'progress',
   tagline:
-    'A local terminal tool. Python measures the machine. A small model handles short replies.',
+    'A local assistant for the folder I am working in. It should read the files and report on them.',
   status: 'Working on this machine',
   problem:
-    'I wanted disk and file checks on this machine, and a short reply when I asked for one, without a cloud agent in the middle.',
-  contributionLabel: 'What I built',
+    'I wanted an assistant for code work on this machine. It should handle the files, sort out what is in the project, and show me what is going on, so I am not the one reading every file and doing that sorting. When I ask, I want a clear report on the thing I prompted.',
+  contributionLabel: 'What runs today',
   contribution:
-    'Python reads drive space, folders, and files, and it does that without calling the model. Write, delete, and run ask before they change anything. The model is a local 1.5B coder. A one-word answer comes back in seconds. Explaining one small file is slow, and the reply can add a detail the file does not have. It does not yet summarise a real project inside its time limit.',
+    'That report is the aim. What runs is smaller. Python reads drive space, folders, and files, and it does that without calling the model. Write, delete, and run ask before they change anything. The model is a local 1.5B coder. A one-word answer comes back in seconds. Explaining one small file is slow, and the reply can add a detail the file does not have. It does not yet read a real project and come back with the report.',
   highlights: [
     'Disk, folders, and file text come from Python. The model is not involved',
     'Delete and run wait for a yes before they do anything',
@@ -262,7 +262,7 @@ export const NOVA: Project = {
   },
   techStack: ['Python', 'LM Studio', 'Qwen2.5-Coder 1.5B'],
   pointTo:
-    'The split. Measurements do not depend on the model, and the model can be swapped from the config. The gaps are specific: Git Bash rewrites a slash command, a small file still takes a long reply, and a real folder does not fit in the time limit.',
+    'The aim is a report drawn from the files that are actually there. Python can already list and read them, and the model can be swapped from the config. It cannot yet turn a real folder into that report. Git Bash also rewrites a slash command before Nova sees it.',
   images: [
     {
       src: '/work/nova-bash-space.png',
