@@ -123,7 +123,7 @@ export const LASHED_BY_LORAH: Project = {
   highlights: [
     'Sticky navigation, and a hero with two paths: book, or browse the services',
     'Featured service cards, the full menu, and a pricing table split into lashes and waxing, with care notes',
-    'About section with her portrait, five years of experience, certifications, and a short philosophy',
+    'About section with a stand-in photo, five years of experience, certifications, and a short philosophy',
     'Gallery with hover labels and a lightbox, and client quotes that advance on their own',
     'The form checks required fields and shows a thank-you state. It does not send mail yet',
   ],
@@ -143,7 +143,8 @@ export const LASHED_BY_LORAH: Project = {
     {
       src: '/work/lashed-by-lorah-about.png',
       label: 'About',
-      alt: 'Portrait of Lorah beside a short bio, her certifications, and a note on her approach to beauty',
+      alt: 'A stand-in photo beside a short bio, certifications, and a note on her approach to beauty. The photo is not Lorah.',
+      note: 'NB: this is not Lorah. It is a photo I took, used in her place.',
     },
     {
       src: '/work/lashed-by-lorah-booking.png',
@@ -241,22 +242,40 @@ export const NOVA: Project = {
   title: 'Nova',
   category: 'Personal tool',
   stage: 'progress',
-  tagline: 'A private, offline AI assistant that runs in the terminal.',
-  status: 'Working — in daily personal use',
+  tagline:
+    'A local terminal tool. Python measures the machine. A small model handles short replies.',
+  status: 'Working on this machine',
   problem:
-    "Cloud AI agents were either expensive, too heavy, or didn't integrate with my development environment. I wanted something free, lightweight and running locally.",
+    'I wanted disk and file checks on this machine, and a short reply when I asked for one, without a cloud agent in the middle.',
   contributionLabel: 'What I built',
   contribution:
-    'A terminal-based assistant powered by a locally hosted model, with commands for reading files, writing files, deleting files, running terminal commands and listing project files — with confirmation prompts before anything destructive.',
+    'Python reads drive space, folders, and files, and it does that without calling the model. Write, delete, and run ask before they change anything. The model is a local 1.5B coder. A one-word answer comes back in seconds. Explaining one small file is slow, and the reply can add a detail the file does not have. It does not yet summarise a real project inside its time limit.',
   highlights: [
-    'Runs entirely offline: no cloud cost, no data leaving the machine',
-    'Global Python script that works across any project directory',
-    'Used to scaffold a Laravel project, plan a feature build and manage dependencies',
+    'Disk, folders, and file text come from Python. The model is not involved',
+    'Delete and run wait for a yes before they do anything',
+    'From Windows Python, the slash commands run. In Git Bash they are rewritten into file paths first',
+    'Asked for disk space from Git Bash, Nova described Git’s own folder instead',
   ],
+  note: {
+    label: 'Measured 11 Nov 2026',
+    body: 'Local commands passed. A short question took a few seconds. A five-line file took about a minute and a half, and the reply invented a comment. A longer reply on the Nova folder ran off the edge of the terminal and repeated itself. Overview of the repo did not finish in time.',
+  },
   techStack: ['Python', 'LM Studio', 'Qwen2.5-Coder 1.5B'],
   pointTo:
-    "Deleting files needed a confirmation step — not because the code was hard, but because I've learned what happens when automation is too eager. The interesting part of the build was making the tool trustworthy enough to actually use.",
-  imageNotes: ['Terminal session showing a command and its response'],
+    'The split. Measurements do not depend on the model, and the model can be swapped from the config. The gaps are specific: Git Bash rewrites a slash command, a small file still takes a long reply, and a real folder does not fit in the time limit.',
+  images: [
+    {
+      src: '/work/nova-bash-space.png',
+      label: 'Git Bash',
+      alt: 'Git Bash session. nova /space was answered with a description of Git’s install folder, not the free disk space.',
+    },
+    {
+      src: '/work/nova-overview-wrap.png',
+      label: 'Long reply',
+      alt: 'A long Nova reply that runs off the right edge and repeats, instead of a clean summary of the folder.',
+    },
+  ],
+  imageNotes: [],
   imagePlaceholderType: 'terminal',
 };
 

@@ -64,6 +64,9 @@ function ImageStack({ images }: { images: ProjectImage[] }) {
             decoding="async"
             className="block w-full h-auto"
           />
+          {image.note && (
+            <p className="px-3.5 py-3 text-sm font-light text-[var(--muted)]">{image.note}</p>
+          )}
         </figure>
       ))}
     </div>

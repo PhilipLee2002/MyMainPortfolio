@@ -20,20 +20,37 @@ const bodyFont = DM_Sans({
   display: 'swap',
 });
 
+const PRODUCTION_SITE_URL = 'https://my-main-portfolio-tau.vercel.app';
+
+function siteUrl() {
+  const configured = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, '');
+  if (
+    configured &&
+    !/^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/i.test(configured)
+  ) {
+    return configured;
+  }
+  return PRODUCTION_SITE_URL;
+}
+
 export const metadata: Metadata = {
   title: 'Philip Lee — Full-Stack Developer | Laravel & AI Specialist',
   description:
     'Full-stack developer specialising in Laravel architecture and local AI. Building clean, scalable solutions for complex business problems.',
-  metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL ?? 'https://philip-lee.vercel.app'
-  ),
+  metadataBase: new URL(siteUrl()),
   openGraph: {
     type: 'website',
     title: 'Philip Lee — Full-Stack Developer | Laravel & AI Specialist',
     description:
       'Full-stack developer specialising in Laravel architecture and local AI.',
-    images: [{ url: '/og-image.jpg', width: 1200, height: 630 }],
-    // {/* REPLACE WITH REAL OG IMAGE */}
+    images: [
+      {
+        url: '/og-image.jpg?v=2',
+        width: 1200,
+        height: 630,
+        alt: 'Philip Lee',
+      },
+    ],
     url: '/',
   },
   twitter: {
@@ -41,7 +58,7 @@ export const metadata: Metadata = {
     title: 'Philip Lee — Full-Stack Developer | Laravel & AI Specialist',
     description:
       'Full-stack developer specialising in Laravel architecture and local AI.',
-    images: ['/og-image.jpg'],
+    images: ['/og-image.jpg?v=2'],
   },
   alternates: {
     canonical: '/',

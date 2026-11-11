@@ -10,6 +10,8 @@ export interface ProjectImage {
   /** Visible caption. Kept separate from the file name. */
   label: string;
   alt: string;
+  /** Short note shown under this image. */
+  note?: string;
 }
 
 export interface Project {
